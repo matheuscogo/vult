@@ -1,0 +1,8 @@
+export const AVISOS = '/avisos'
+export const CONFINAMENTOS = '/confinamentos'
+export const HOME = '/'
+export const INSEMINACOES = '/inseminacoes'
+export const MATRIZES = '/matrizes'
+export const PARAMETROS = '/parametros'
+export const PLANOS = '/planos'
+export const REGISTROS = '/registros'
