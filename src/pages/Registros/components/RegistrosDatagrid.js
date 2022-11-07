@@ -1,52 +1,48 @@
-import React, { useEffect, useState } from 'react';
-import { get } from 'lodash';
-import { DataGrid } from '@mui/x-data-grid';
-import Grid from '@mui/material/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import InfoIcon from '@mui/icons-material/Info';
-import { getRegistros } from '../../../services/Registros';
+import React, { useEffect, useState } from 'react'
+import { get } from 'lodash'
+import { DataGrid } from '@mui/x-data-grid'
+import Grid from '@mui/material/Grid'
+import IconButton from '@material-ui/core/IconButton'
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
+import InfoIcon from '@mui/icons-material/Info'
+import { getRegistros } from '../../../services/Registros'
 
 export default function PlanosDatagrid(props) {
-  const [rows, setRows] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [rows, setRows] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  const {
-    refresh
-  } = props
-
-  console.warn(props)
-
-    useEffect(() => {
-      setLoading(true);
-      getRegistros()
-        .then((response) => {
-          setRows(get(response, 'data.data'));
-        })
-        .catch()
-        .finally(setLoading(false));
-    }, [refresh]);
-
-  const width = '820';
+  const { refresh } = props
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(true)
     getRegistros()
       .then((response) => {
-        setRows(get(response, 'data.data'));
+        setRows(get(response, 'data.data'))
       })
       .catch()
-      .finally(setLoading(false));
-  }, []);
+      .finally(setLoading(false))
+  }, [refresh])
+
+  const width = '820'
 
   useEffect(() => {
-    setLoading(false);
-  }, [rows]);
+    setLoading(true)
+    getRegistros()
+      .then((response) => {
+        setRows(get(response, 'data.data'))
+      })
+      .catch()
+      .finally(setLoading(false))
+  }, [])
+
+  useEffect(() => {
+    setLoading(false)
+  }, [rows])
 
   const columns = [
     {
-      field: 'id', 
+      field: 'id',
       headerName: 'ID',
       value: '',
     },
@@ -92,52 +88,52 @@ export default function PlanosDatagrid(props) {
       width: width / 5 + 20,
       renderCell: (params) => {
         const infoClick = (e) => {
-          e.stopPropagation();
+          e.stopPropagation()
 
-          const api = params.api;
-          const thisRow = {};
+          const api = params.api
+          const thisRow = {}
 
           api
             .getAllColumns()
             .filter((c) => c.field !== '__check__' && !!c)
             .forEach(
               (c) => (thisRow[c.field] = params.getValue(params.id, c.field))
-            );
+            )
 
-          return alert(JSON.stringify(thisRow, null, 4));
-        };
+          return alert(JSON.stringify(thisRow, null, 4))
+        }
 
         const editClick = (e) => {
-          e.stopPropagation();
+          e.stopPropagation()
 
-          const api = params.api;
-          const thisRow = {};
+          const api = params.api
+          const thisRow = {}
 
           api
             .getAllColumns()
             .filter((c) => c.field !== '__check__' && !!c)
             .forEach(
               (c) => (thisRow[c.field] = params.getValue(params.id, c.field))
-            );
+            )
 
-          return alert(JSON.stringify(thisRow, null, 4));
-        };
+          return alert(JSON.stringify(thisRow, null, 4))
+        }
 
         const deleteClick = (e) => {
-          e.stopPropagation();
+          e.stopPropagation()
 
-          const api = params.api;
-          const thisRow = {};
+          const api = params.api
+          const thisRow = {}
 
           api
             .getAllColumns()
             .filter((c) => c.field !== '__check__' && !!c)
             .forEach(
               (c) => (thisRow[c.field] = params.getValue(params.id, c.field))
-            );
-            
-            return alert(JSON.stringify(thisRow, null, 4));
-        };
+            )
+
+          return alert(JSON.stringify(thisRow, null, 4))
+        }
 
         return (
           <Grid container>
@@ -157,10 +153,10 @@ export default function PlanosDatagrid(props) {
               </IconButton>
             </Grid>
           </Grid>
-        );
+        )
       },
     },
-  ];
+  ]
 
   return (
     <DataGrid
@@ -168,9 +164,9 @@ export default function PlanosDatagrid(props) {
       columns={columns}
       loading={loading}
       pageSize={20}
-      style={{width: 1240, height: 500}}
+      style={{ width: 1240, height: 500 }}
       rowsPerPageOptions={[0]}
       className="DataGrid"
     />
-  );
+  )
 }

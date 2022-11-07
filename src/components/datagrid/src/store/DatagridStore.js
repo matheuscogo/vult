@@ -1,110 +1,101 @@
-// import {
-//   makeObservable,
-//   observable,
-//   action,
-//   computed,
-//   override,
-//   toJS,
-// } from 'mobx'
-// import { mapValues, cloneDeep, head } from 'lodash'
-// import { isFunction, map, isEmpty } from 'lodash'
+import { makeObservable, observable, action } from 'mobx'
+import { mapValues, cloneDeep } from 'lodash'
+import { isFunction, map, isEmpty, isNumber } from 'lodash'
 
-// class DatagridStore {
-//   constructor({ endpoint, initialData }) {
-//     this.init = this.init.bind(this)
-//     this.fetchData = this.fetchData.bind(this)
-//     this.setColumns = this.setColumns.bind(this)
+class DatagridStore {
+  constructor({ endpoint, initialData }) {
+    this.init = this.init.bind(this)
+    this.fetchData = this.fetchData.bind(this)
+    this.setColumns = this.setColumns.bind(this)
 
-//     this.endpoint = endpoint
+    this.endpoint = endpoint
 
-//     Promise.all([this.init(initialData)])
+    Promise.all([this.init(initialData)])
 
-//     makeObservable(this, {
-//       init: action,
-//       setInitialStates: action,
-//       services: observable,
-//       loading: observable,
-//       datagrid: observable,
-//     })
-//   }
+    makeObservable(this, {
+      init: action,
+      setInitialStates: action,
+      services: observable,
+      loading: observable,
+      datagrid: observable,
+    })
+  }
 
-//   services = {}
-//   initialData = {}
-//   datagrid = {
-//     rows: [],
-//     columns: [],
-//     loading: false,
-//   }
-//   endpoint = () => {}
+  services = {}
+  initialData = {}
+  datagrid = {
+    rows: [],
+    columns: [],
+    loading: false,
+  }
+  endpoint = () => {}
 
-//   async init(initialData) {
-//     Promise.all([this.setDatagrid(initialData)])
-//   }
+  async init(initialData) {
+    Promise.all([this.setDatagrid(initialData)])
+  }
 
-//   setInitialStates = (initialData = {}) => {
-//     initialData = mapValues(initialData, (state) => state)
+  setInitialStates = (initialData = {}) => {
+    initialData = mapValues(initialData, (state) => state)
 
-//     const states = mapValues(initialData, (state) => {
-//       return state
-//     })
-//     this.formStates = cloneDeep(states)
-//   }
+    const states = mapValues(initialData, (state) => {
+      return state
+    })
+    this.formStates = cloneDeep(states)
+  }
 
-//   setColumns = async (initialData) => {
-//     if (!isEmpty(initialData)) {
-//       this.datagrid.columns = map(initialData, (value, key) => {
-//         return {
-//           field: value.field,
-//           headerName: value.headerName,
-//           editable: false,
-//         }
-//       })
-//     }
-//   }
+  setColumns = async (initialData) => {
+    if (!isEmpty(initialData)) {
+      this.datagrid.columns = map(initialData, (value, key) => {
+        console.warn('value.editable', isEmpty(value.editable) ? false : true)
+        return {
+          field: value.field,
+          headerName: value.headerName,
+          editable: isEmpty(value.editable) ? false : true,
+          width: isNumber(value.width) ? value.width : 150,
+          renderCell: isFunction(value.renderCell) ? value.renderCell : null,
+        }
+      })
+    }
+  }
 
-//   setDatagrid = async (initialData) => {
-//     if (isEmpty(this.datagrid.columns)) {
-//       Promise.all([this.setColumns(initialData)])
+  setDatagrid = async (initialData) => {
+    if (isEmpty(this.datagrid.columns)) {
+      Promise.all([this.setColumns(initialData)])
 
-//       if (!isEmpty(this.datagrid.columns)) {
-//         // console.warn('existem colunas')
-//         Promise.all([this.fetchData()])
-//       }
-//     }
-//   }
+      if (!isEmpty(this.datagrid.columns)) {
+        this.loading = false
+        // Promise.all([this.fetchData()])
+      }
+    }
+  }
 
-//   fetchData = async () => {
-//     if (isFunction(this.endpoint)) {
-//       if (isEmpty(this.datagrid.rows)) {
-//         console.warn('linhas vazias')
-//         this.loading = true
-//         console.warn('this.loading', this.loading)
-//         Promise.all([this.endpoint()])
-//           .then((response) => {
-//             this.datagrid.rows = head(response)
-//             console.warn('response', response)
-//             console.warn('this.datagrid.rows', this.datagrid.rows)
-//             this.loading = false
-//           })
-//           .catch((e) => {
-//             throw e
-//           })
-//           .finally(() => {
-//             this.loading = false
-//           })
-//         console.warn('this.loading', this.loading)
-//       }
-//     }
-//   }
+  fetchData = async () => {
+    if (isFunction(this.endpoint)) {
+      if (isEmpty(this.datagrid.rows)) {
+        this.loading = true
+        this.endpoint()
+          .then((response) => {
+            this.datagrid.rows = response
+            this.loading = false
+          })
+          .catch((e) => {
+            throw e
+          })
+          .finally(() => {
+            this.loading = false
+          })
+      }
+    }
+  }
 
-//   treatRowAction = async () => {}
+  treatRowAction = async () => {}
 
-//   refreshData = async () => {
-//     if (isFunction(this.endpoint)) {
-//       const response = await this.endpoint()
-//       this.datagrid.rows = response
-//     }
-//   }
-// }
+  refreshData = async () => {
+    if (isFunction(this.endpoint)) {
+      const response = await this.endpoint()
+      this.datagrid.rows = response
+    }
+  }
+}
 
-// export default DatagridStore
+export default DatagridStore

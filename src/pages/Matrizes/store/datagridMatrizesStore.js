@@ -1,13 +1,13 @@
 import DatagridStore from '../../../components/datagrid/src/store/DatagridStore'
-import { GET_ALL_MATRIZES  } from '../../../services/CONSTANTS'
+import { getMatrizes } from '../../../services/Matrizes'
 
 export default class DatagridMatrizesStore extends DatagridStore {
-  constructor(){
+  constructor() {
     super({
-      endpoint: GET_ALL_MATRIZES,
+      endpoint: getMatrizes,
       initialData: {
         id: {
-          field: 'id', 
+          field: 'id',
           headerName: 'ID',
         },
         rfid: {
@@ -22,7 +22,7 @@ export default class DatagridMatrizesStore extends DatagridStore {
           field: 'ciclos',
           headerName: 'Ciclos',
         },
-      }
+      },
     })
   }
-};
+}

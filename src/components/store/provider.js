@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { Provider } from 'mobx-react'
 
 const provider =
