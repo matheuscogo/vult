@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const instance = axios.create({
   // baseURL: 'http://localhost:5000/api/v1/',
-  baseURL: 'http://matheuscogo.pythonanywhere.com/api/v1/',
+  baseURL: '35.173.69.207:80/api/v1/',
 })
 
 const get = async (endpoint, headers, body) => {
