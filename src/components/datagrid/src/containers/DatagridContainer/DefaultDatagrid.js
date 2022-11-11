@@ -9,9 +9,7 @@ import { withStyles } from '@material-ui/styles'
 import styles from './styles'
 
 const DefaultDatagrid = (props) => {
-  const { rows, columns } = props
-
-  console.warn('columns', columns)
+  const { rows, columns, refresh, add, title } = props
 
   return (
     <Box>
@@ -22,13 +20,17 @@ const DefaultDatagrid = (props) => {
         justifyContent="center"
       >
         <Grid item style={{ margin: 10, marginRight: 100 }}>
-          <Fab variant="extended">
+          <Fab variant="extended" onClick={() => add()}>
             <AddCircleIcon sx={{ mr: 1 }} />
-            Cadastrar
+            Cadastrar {title}
           </Fab>
         </Grid>
         <Grid item style={{ margin: 10, marginLeft: 100 }}>
-          <Fab variant="extended" style={{ padding: 25, float: 'right' }}>
+          <Fab
+            variant="extended"
+            style={{ padding: 25, float: 'right' }}
+            onClick={() => refresh()}
+          >
             <ReplayCircleFilledIcon sx={{ mr: 1 }} />
             Atualizar listagem
           </Fab>

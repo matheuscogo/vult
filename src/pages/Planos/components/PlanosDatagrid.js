@@ -7,7 +7,23 @@ export default function PlanosDatagrid(props) {
   const [rows, setRows] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const [rowActions] = useState({})
+  const refresh = () => {
+    setLoading(true)
+    getPlanos()
+      .then((result) => {
+        setRows(result)
+        setLoading(false)
+      })
+      .catch((e) => {
+        console.error(e)
+        setRows([])
+        setLoading(false)
+      })
+  }
+
+  const add = () => {
+    alert('adicionar')
+  }
 
   const { store } = props
 
@@ -30,12 +46,14 @@ export default function PlanosDatagrid(props) {
 
   return (
     <DefaultDatagrid
+      title={'Plano'}
       columns={columns}
-      rowActions={rowActions}
+      add={add}
+      refresh={refresh}
       rows={rows}
       pageSize={20}
       loading={loading}
-      style={{ minHeight: '100vh', minWidth: 1080 }}
+      style={{ minHeight: '100vh', minWidth: 920 }}
       rowsPerPageOptions={[0]}
       className="DataGrid"
     />

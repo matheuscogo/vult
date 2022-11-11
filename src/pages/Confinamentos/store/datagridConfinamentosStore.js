@@ -1,34 +1,70 @@
 import DatagridStore from '../../../components/datagrid/src/store/DatagridStore'
-import { getMatrizes } from '../../../services/Matrizes'
+import { getConfinamentos } from '../../../services/Confinamentos'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import CancelIcon from '@mui/icons-material/Cancel'
 import Grid from '@mui/material/Grid'
-import { IconButton } from '@mui/material'
+import { IconButton, Typography } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import InfoIcon from '@mui/icons-material/Info'
+import { isBoolean } from 'lodash'
+import Moment from 'moment'
 
-export default class DatagridMatrizesStore extends DatagridStore {
+export default class DatagridConfinamentosStore extends DatagridStore {
   constructor() {
     super({
-      endpoint: getMatrizes,
+      endpoint: getConfinamentos,
       initialData: {
         id: {
           field: 'id',
           headerName: 'ID',
           hide: true,
         },
-        rfid: {
-          field: 'rfid',
-          headerName: 'RFID',
-          width: 250,
+        matriz: {
+          field: 'matriz',
+          headerName: 'Matriz',
+          width: 230,
+          renderCell: ({ value }) => (
+            <Typography>Matriz nº {value.description}</Typography>
+          ),
         },
-        numero: {
-          field: 'numero',
-          headerName: 'Número da Matriz',
+        plano: {
+          field: 'plano',
+          headerName: 'Plano',
+          width: 250,
+          renderCell: ({ value }) => (
+            <Typography>{value.description}</Typography>
+          ),
+        },
+        dataConfinamento: {
+          field: 'dataConfinamento',
+          headerName: 'Data do confinamento',
+          renderCell: ({ value }) => {
+            Moment.locale('pt-br')
+            return (
+              <Typography> {Moment(value).format('DD/MM/YYYY')} </Typography>
+            )
+          },
           width: 200,
         },
-        ciclos: {
-          field: 'ciclos',
-          headerName: 'Quantidade de ciclos',
+        ativo: {
+          field: 'active',
+          headerName: 'Ativo',
+          width: 70,
+          renderCell: (params) => {
+            if (isBoolean(params.value)) {
+              return params.value ? (
+                <div>
+                  <CheckCircleIcon style={{ color: 'green' }} />
+                </div>
+              ) : (
+                <div>
+                  <CancelIcon style={{ color: 'red' }} />
+                </div>
+              )
+            }
+            return <div>{params.value}</div>
+          },
         },
         actions: {
           field: 'actions',

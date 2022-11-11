@@ -17,6 +17,7 @@ export default class DatagridPlanosStore extends DatagridStore {
         id: {
           field: 'id',
           headerName: 'ID',
+          hide: true,
         },
         nome: {
           field: 'nome',
@@ -42,7 +43,6 @@ export default class DatagridPlanosStore extends DatagridStore {
           width: 70,
           renderCell: (params) => {
             if (isBoolean(params.value)) {
-              console.warn('params', params)
               return params.value ? (
                 <div>
                   <CheckCircleIcon style={{ color: 'green' }} />

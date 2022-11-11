@@ -30,12 +30,13 @@ export default function MatrizesDatagrid(props) {
 
   return (
     <DefaultDatagrid
+      title="Matriz"
       columns={columns}
       rowActions={rowActions}
       rows={rows}
       pageSize={20}
       loading={loading}
-      style={{ minHeight: '100vh', minWidth: 830 }}
+      style={{ minHeight: '100vh', minWidth: 750 }}
       rowsPerPageOptions={[0]}
       className="DataGrid"
     />

@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import { isEmpty } from 'lodash'
 import DefaultDatagrid from '../../../components/datagrid/src/containers/DatagridContainer/DefaultDatagrid'
-import { getConfinamentos } from '../../../services/Confinamentos'
+import { getInseminacoes } from '../../../services/Inseminacoes'
 
-export default function ConfinamentosDatagrid(props) {
+export default function InseminacoesDatagrid(props) {
   const [rows, setRows] = useState([])
   const [loading, setLoading] = useState(true)
 
   const refresh = () => {
     setLoading(true)
-    getConfinamentos()
+    getInseminacoes()
       .then((result) => {
         setRows(result)
         setLoading(false)
@@ -32,7 +32,7 @@ export default function ConfinamentosDatagrid(props) {
   } = store
 
   if (isEmpty(rows)) {
-    getConfinamentos()
+    getInseminacoes()
       .then((result) => {
         setRows(result)
         setLoading(false)

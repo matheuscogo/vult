@@ -18,7 +18,7 @@ const PlanosView = inject('datagridPlanosStore')(
           alignItems="center"
         >
           <Grid item>
-            <Typography>{title}</Typography>
+            <Typography variant="h4">{title}</Typography>
           </Grid>
           <Grid item>
             <PlanosDatagrid store={store} />

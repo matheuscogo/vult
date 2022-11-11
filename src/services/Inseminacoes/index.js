@@ -1,33 +1,40 @@
-import axios from 'axios';
-
-const instance = axios.create({
-  // baseURL: 'http://localhost:5000/api/v1/inseminacao',
-  baseURL: 'http://192.168.0.104:5000/api/v1/inseminacao',
-});
+import { get } from '../index'
 
 const getInseminacao = async (id) => {
-  return await instance
-    .get(`/${id}`)
-    .then((res) => res)
-    .catch((err) => console.error(err));
-};
+  try {
+    const body = await get(`inseminacoes/${id}`)
+    return body
+  } catch (e) {
+    console.error(e)
+    return e
+  }
+}
+const getInseminacoes = async () => {
+  try {
+    const body = await get(`inseminacoes`)
+    return body.data
+  } catch (e) {
+    console.error(e)
+    return e
+  }
+}
 
-const getInsemiacoes = async () => {
-  return await instance
-    .get('/')
-    .then((res) => res)
-    .catch((err) => console.error(err));
-};
+// const getMatrizes = async () => {
+//   return await instance
+//     .get('/')
+//     .then((res) => res)
+//     .catch((err) => console.error(err))
+// }
 
-const insertInseminacao = async (inseminacao) => {
-  return await instance.post('/insert', inseminacao);
-};
+// const insertMatriz = async (matriz) => {
+//   return await instance.post('/insert', matriz)
+// }
 
-const updateIseminacao = async (inseminacao) => {
-  return await instance.put('/update/', inseminacao);
-};
-const deleteInseminacao = async (id) => {
-  return await instance.delete(`/delete/${id}`);
-};
+// const updateMatriz = async (matriz) => {
+//   return await instance.put('/update/', matriz)
+// }
+// const deleteMatriz = async (id) => {
+//   return await instance.delete(`/delete/${id}`)
+// }
 
-export { getInseminacao, getInsemiacoes, insertInseminacao, updateIseminacao, deleteInseminacao };
+export { getInseminacao, getInseminacoes }

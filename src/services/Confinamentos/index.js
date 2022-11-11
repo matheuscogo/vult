@@ -1,33 +1,40 @@
-import axios from 'axios';
-
-const instance = axios.create({
-  // baseURL: 'http://localhost:5000/api/v1/confinamentos',
-  baseURL: 'http://192.168.0.104:5000/api/v1/confinamentos',
-});
+import { get } from '../index'
 
 const getConfinamento = async (id) => {
-  return await instance
-    .get(`/${id}`)
-    .then((res) => console.log(res))
-    .catch((err) => console.log('Login: ', err));
-};
-
+  try {
+    const body = await get(`confinamentos/${id}`)
+    return body
+  } catch (e) {
+    console.error(e)
+    return e
+  }
+}
 const getConfinamentos = async () => {
-  return await instance
-    .get('/')
-    .then((res) => res)
-    .catch((err) => console.error(err));
-};
+  try {
+    const body = await get(`confinamentos`)
+    return body.data
+  } catch (e) {
+    console.error(e)
+    return e
+  }
+}
 
-const insertConfinamento = async (confinamento) => {
-  return await instance.post('/insert', confinamento);
-};
+// const getMatrizes = async () => {
+//   return await instance
+//     .get('/')
+//     .then((res) => res)
+//     .catch((err) => console.error(err))
+// }
 
-const updateConfinamento = async (confinamento) => {
-  return await instance.put('/update/', confinamento);
-};
-const deleteConfinamento = async (id) => {
-  return await instance.delete(`/delete/${id}`);
-};
+// const insertMatriz = async (matriz) => {
+//   return await instance.post('/insert', matriz)
+// }
 
-export { getConfinamento, getConfinamentos, insertConfinamento, updateConfinamento, deleteConfinamento };
+// const updateMatriz = async (matriz) => {
+//   return await instance.put('/update/', matriz)
+// }
+// const deleteMatriz = async (id) => {
+//   return await instance.delete(`/delete/${id}`)
+// }
+
+export { getConfinamento, getConfinamentos }

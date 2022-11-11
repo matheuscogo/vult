@@ -46,13 +46,13 @@ class DatagridStore {
   setColumns = async (initialData) => {
     if (!isEmpty(initialData)) {
       this.datagrid.columns = map(initialData, (value, key) => {
-        console.warn('value.editable', isEmpty(value.editable) ? false : true)
         return {
           field: value.field,
           headerName: value.headerName,
           editable: isEmpty(value.editable) ? false : true,
           width: isNumber(value.width) ? value.width : 150,
           renderCell: isFunction(value.renderCell) ? value.renderCell : null,
+          hide: value.hide,
         }
       })
     }

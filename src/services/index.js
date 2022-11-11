@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  // baseURL: 'http://localhost:5000/api/v1/',
-  baseURL: 'https://matheuscogo.pythonanywhere.com/api/v1/',
+  baseURL: 'http://localhost:5000/api/v1/',
+  // baseURL: 'https://matheuscogo.pythonanywhere.com/api/v1/',
 })
 
 const get = async (endpoint, headers, body) => {
@@ -30,8 +30,6 @@ const post = async (endpoint, headers, body) => {
       throw result
     }
 
-    console.warn(result)
-
     return result.response
   } catch (e) {
     console.error(e)
@@ -47,8 +45,6 @@ const put = async (endpoint, headers, body) => {
       throw result
     }
 
-    console.warn(result)
-
     return result.response
   } catch (e) {
     console.error(e)
@@ -63,8 +59,6 @@ const del = async (endpoint, headers, body) => {
     if (result.success) {
       throw result
     }
-
-    console.warn(result)
 
     return result.response
   } catch (e) {
