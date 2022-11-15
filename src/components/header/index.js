@@ -56,7 +56,7 @@ const Header = () => {
           <LinkRoute to={AVISOS}>Avisos</LinkRoute>
         </Grid>
         <Grid item>
-          <LinkRoute to={REGISTROS}>Regostros</LinkRoute>
+          <LinkRoute to={REGISTROS}>Registros</LinkRoute>
         </Grid>
       </Grid>
       <Divider style={{ margin: 16 }}></Divider>

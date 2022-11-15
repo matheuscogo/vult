@@ -1,7 +1,7 @@
 import DatagridStore from '../../../components/datagrid/src/store/DatagridStore'
 import { getMatrizes } from '../../../services/Matrizes'
 import Grid from '@mui/material/Grid'
-import { IconButton } from '@mui/material'
+import { IconButton, Typography } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import InfoIcon from '@mui/icons-material/Info'
@@ -25,10 +25,12 @@ export default class DatagridMatrizesStore extends DatagridStore {
           field: 'numero',
           headerName: 'Número da Matriz',
           width: 200,
+          renderCell: ({ value }) => <Typography>Nº {value}</Typography>,
         },
         ciclos: {
           field: 'ciclos',
           headerName: 'Quantidade de ciclos',
+          renderCell: ({ value }) => <Typography>{value} ciclos</Typography>,
         },
         actions: {
           field: 'actions',

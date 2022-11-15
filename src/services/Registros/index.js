@@ -1,35 +1,40 @@
-import axios from 'axios'
-
-const instance = axios.create({
-  // baseURL: 'http://localhost:5000/api/v1/registros',
-  baseURL: 'http://localhost:5000/api/v1/registros',
-})
-
-const getRegistros = async () => {
-  return await instance
-    .get('/')
-    .then((response) => response)
-    .catch((error) => console.error(error))
-}
+import { get } from '../index'
 
 const getRegistro = async (id) => {
-  return await instance
-    .get(`/${id}`)
-    .then((response) => response)
-    .catch((error) => console.error(error))
+  try {
+    const body = await get(`registros/${id}`)
+    return body
+  } catch (e) {
+    console.error(e)
+    return e
+  }
+}
+const getRegistros = async () => {
+  try {
+    const body = await get(`registros`)
+    return body.data
+  } catch (e) {
+    console.error(e)
+    return e
+  }
 }
 
-// Registros não precisam ser inseridos/alterados/deletados
-// const insertRegistro = async (registro) => {
-//   return INSERT_REGISTRO(registro);
-// };
+// const getMatrizes = async () => {
+//   return await instance
+//     .get('/')
+//     .then((res) => res)
+//     .catch((err) => console.error(err))
+// }
 
-// const updateRegistro = async (registro) => {
-//   return UPDATE_REGISTRO(registro);
-// };
-// const deleteRegistro= async (id) => {
-//   return DELETE_REGISTRO(id);
-// };
+// const insertMatriz = async (matriz) => {
+//   return await instance.post('/insert', matriz)
+// }
 
-export { getRegistros, getRegistro }
-// export { getRegistro, getRegistros, insertRegistro, updateRegistro, deleteRegistro };
+// const updateMatriz = async (matriz) => {
+//   return await instance.put('/update/', matriz)
+// }
+// const deleteMatriz = async (id) => {
+//   return await instance.delete(`/delete/${id}`)
+// }
+
+export { getRegistro, getRegistros }

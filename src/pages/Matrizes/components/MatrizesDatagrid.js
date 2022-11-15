@@ -4,6 +4,20 @@ import { getMatrizes } from '../../../services/Matrizes'
 import { isEmpty } from 'lodash'
 
 export default function MatrizesDatagrid(props) {
+  const refresh = () => {
+    setLoading(true)
+    getMatrizes()
+      .then((result) => {
+        setRows(result)
+        setLoading(false)
+      })
+      .catch((e) => {
+        console.error(e)
+        setRows([])
+        setLoading(false)
+      })
+  }
+
   const [rows, setRows] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -31,6 +45,7 @@ export default function MatrizesDatagrid(props) {
   return (
     <DefaultDatagrid
       title="Matriz"
+      refresh={refresh}
       columns={columns}
       rowActions={rowActions}
       rows={rows}
