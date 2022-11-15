@@ -1,26 +1,40 @@
-import axios from 'axios';
+import { get } from '../index'
 
-const instance = axios.create({
-  // baseURL: 'http://localhost:5000/api/v1/avisos',
-  baseURL: 'http://192.168.0.104:5000/api/v1/avisos',
-});
-
-const geAviso = async (id) => {
-  return await instance
-    .get(`/${id}`)
-    .then((res) => console.log(res))
-    .catch((err) => console.log('Login: ', err));
-};
-
+const getAviso = async (id) => {
+  try {
+    const body = await get(`avisos/${id}`)
+    return body
+  } catch (e) {
+    console.error(e)
+    return e
+  }
+}
 const getAvisos = async () => {
-  return await instance
-    .get('/')
-    .then((res) => res)
-    .catch((err) => console.error(err));
-};
+  try {
+    const body = await get(`avisos`)
+    return body.data
+  } catch (e) {
+    console.error(e)
+    return e
+  }
+}
 
-const separarMatriz = async (data) => {
-  return await instance.put(`/separarMatriz`, data);
-};
+// const getMatrizes = async () => {
+//   return await instance
+//     .get('/')
+//     .then((res) => res)
+//     .catch((err) => console.error(err))
+// }
 
-export { geAviso, getAvisos, separarMatriz };
+// const insertMatriz = async (matriz) => {
+//   return await instance.post('/insert', matriz)
+// }
+
+// const updateMatriz = async (matriz) => {
+//   return await instance.put('/update/', matriz)
+// }
+// const deleteMatriz = async (id) => {
+//   return await instance.delete(`/delete/${id}`)
+// }
+
+export { getAviso, getAvisos }

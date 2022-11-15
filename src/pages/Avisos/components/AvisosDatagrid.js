@@ -1,15 +1,12 @@
 import React, { useState } from 'react'
-import { isEmpty } from 'lodash'
 import DefaultDatagrid from '../../../components/datagrid/src/containers/DatagridContainer/DefaultDatagrid'
-import { getRegistros } from '../../../services/Registros'
+import { getAvisos } from '../../../services/Avisos'
+import { isEmpty } from 'lodash'
 
-export default function RegistrosDatagrid(props) {
-  const [rows, setRows] = useState([])
-  const [loading, setLoading] = useState(true)
-
+export default function AvisosDatagrid(props) {
   const refresh = () => {
     setLoading(true)
-    getRegistros()
+    getAvisos()
       .then((result) => {
         setRows(result)
         setLoading(false)
@@ -21,9 +18,10 @@ export default function RegistrosDatagrid(props) {
       })
   }
 
-  const add = () => {
-    alert('adicionar')
-  }
+  const [rows, setRows] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  const [rowActions] = useState({})
 
   const { store } = props
 
@@ -32,7 +30,7 @@ export default function RegistrosDatagrid(props) {
   } = store
 
   if (isEmpty(rows)) {
-    getRegistros()
+    getAvisos()
       .then((result) => {
         setRows(result)
         setLoading(false)
@@ -46,14 +44,14 @@ export default function RegistrosDatagrid(props) {
 
   return (
     <DefaultDatagrid
-      title={'Registro'}
-      columns={columns}
-      add={add}
+      title="Aviso"
       refresh={refresh}
+      columns={columns}
+      rowActions={rowActions}
       rows={rows}
       pageSize={20}
       loading={loading}
-      style={{ minHeight: '100vh', minWidth: 1050 }}
+      style={{ minHeight: '100vh', minWidth: 812 }}
       rowsPerPageOptions={[0]}
       className="DataGrid"
     />

@@ -13,7 +13,7 @@ function ParametrosView(props) {
         alignItems="center"
       >
         <Grid item>
-          <Typography>{title}</Typography>
+          <Typography variant="h4">{title}</Typography>
         </Grid>
         <Grid item>
           <Typography>Em desenvolvimento...</Typography>

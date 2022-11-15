@@ -18,7 +18,6 @@ const get = async (endpoint, headers, body) => {
     return result.data
   } catch (e) {
     console.error(e)
-    return e
   }
 }
 
@@ -33,7 +32,6 @@ const post = async (endpoint, headers, body) => {
     return result.response
   } catch (e) {
     console.error(e)
-    return e
   }
 }
 

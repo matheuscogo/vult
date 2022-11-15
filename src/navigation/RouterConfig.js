@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import Home from '../pages/Home'
 import Matrizes from '../pages/Matrizes'
 import Confinamentos from '../pages/Confinamentos'
-import Avisos from '../pages/Avisos'
+import AvisosContainer from '../pages/Avisos'
 import Registros from '../pages/Registros'
 import Planos from '../pages/Planos'
 import Inseminacoes from '../pages/Inseminacoes'
@@ -31,7 +31,7 @@ export const RouterConfig = () => {
         <Route exact path={CONFINAMENTOS} element={<Confinamentos />} />
         <Route exact path={PLANOS} element={<Planos />} />
         <Route exact path={REGISTROS} element={<Registros />} />
-        <Route exact path={AVISOS} element={<Avisos />} />
+        <Route exact path={AVISOS} element={<AvisosContainer />} />
       </Routes>
     </div>
   )
