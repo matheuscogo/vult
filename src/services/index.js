@@ -7,15 +7,15 @@ const instance = axios.create({
 
 const get = async (endpoint, headers, body) => {
   try {
-    const result = await instance.get(endpoint)
+    const { data } = await instance.get(endpoint)
 
-    const success = result.status === 200
+    const { success, message } = data
 
     if (!success) {
-      throw result
+      throw message
     }
 
-    return result.data
+    return data
   } catch (e) {
     console.error(e)
   }
@@ -23,13 +23,15 @@ const get = async (endpoint, headers, body) => {
 
 const post = async (endpoint, headers, body) => {
   try {
-    const result = await instance.post(endpoint, body)
+    const { data } = await instance.post(endpoint, body)
 
-    if (result.success) {
-      throw result
+    const { success, message } = data
+
+    if (!success) {
+      throw message
     }
 
-    return result.response
+    return data
   } catch (e) {
     console.error(e)
   }
@@ -37,13 +39,15 @@ const post = async (endpoint, headers, body) => {
 
 const put = async (endpoint, headers, body) => {
   try {
-    const result = await instance.put(endpoint, body)
+    const { data } = await instance.put(endpoint, body)
 
-    if (result.success) {
-      throw result
+    const { success, message } = data
+
+    if (!success) {
+      throw message
     }
 
-    return result.response
+    return data
   } catch (e) {
     console.error(e)
     return e
@@ -52,13 +56,15 @@ const put = async (endpoint, headers, body) => {
 
 const del = async (endpoint, headers, body) => {
   try {
-    const result = await instance.del(endpoint)
+    const { data } = await instance.delete(endpoint)
 
-    if (result.success) {
-      throw result
+    const { success, message } = data
+
+    if (!success) {
+      throw message
     }
 
-    return result.response
+    return data
   } catch (e) {
     console.error(e)
     return e

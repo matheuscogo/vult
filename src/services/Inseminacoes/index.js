@@ -3,16 +3,27 @@ import { get } from '../index'
 const getInseminacao = async (id) => {
   try {
     const body = await get(`inseminacoes/${id}`)
-    return body
+
+    if (!body.success) {
+      throw body.message
+    }
+
+    return body.response
   } catch (e) {
     console.error(e)
     return e
   }
 }
+
 const getInseminacoes = async () => {
   try {
     const body = await get(`inseminacoes`)
-    return body.data
+
+    if (!body.success) {
+      throw body.message
+    }
+
+    return body.response
   } catch (e) {
     console.error(e)
     return e
