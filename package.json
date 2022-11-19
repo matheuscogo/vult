@@ -2,7 +2,7 @@
   "name": "vult",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://matheuscogo.github.io/vult/",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
