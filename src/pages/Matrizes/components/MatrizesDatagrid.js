@@ -18,6 +18,10 @@ export default function MatrizesDatagrid(props) {
       })
   }
 
+  const add = () => {
+    alert('adicionar')
+  }
+
   const [rows, setRows] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -46,6 +50,7 @@ export default function MatrizesDatagrid(props) {
     <DefaultDatagrid
       title="Matriz"
       refresh={refresh}
+      add={add}
       columns={columns}
       rowActions={rowActions}
       rows={rows}

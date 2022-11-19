@@ -1,10 +1,10 @@
 import DatagridStore from '../../../components/datagrid/src/store/DatagridStore'
-import { getMatrizes } from '../../../services/Matrizes'
-import Grid from '@mui/material/Grid'
-import { IconButton, Typography } from '@mui/material'
+import { deleteMatriz, getMatrizes } from '../../../services/Matrizes'
+import { IconButton, Typography, Grid } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import InfoIcon from '@mui/icons-material/Info'
+import { get } from 'lodash'
 
 export default class DatagridMatrizesStore extends DatagridStore {
   constructor() {
@@ -49,6 +49,7 @@ export default class DatagridMatrizesStore extends DatagridStore {
                 )
               return alert(JSON.stringify(thisRow, null, 4))
             }
+
             const editClick = (e) => {
               e.stopPropagation()
               const api = params.api
@@ -62,6 +63,7 @@ export default class DatagridMatrizesStore extends DatagridStore {
                 )
               return alert(JSON.stringify(thisRow, null, 4))
             }
+
             const deleteClick = (e) => {
               e.stopPropagation()
               const api = params.api
@@ -73,8 +75,17 @@ export default class DatagridMatrizesStore extends DatagridStore {
                   (c) =>
                     (thisRow[c.field] = params.getValue(params.id, c.field))
                 )
-              return alert(JSON.stringify(thisRow, null, 4))
+
+              if (
+                window.confirm(
+                  'Deletar matriz nº ' + get(params, 'row.numero', '')
+                )
+              ) {
+                console.warn(this.datagrid.rows)
+                deleteMatriz(get(params, 'row.id', 0))
+              }
             }
+
             return (
               <Grid container>
                 <Grid item xs={4}>

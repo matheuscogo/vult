@@ -3,16 +3,27 @@ import { get } from '../index'
 const getConfinamento = async (id) => {
   try {
     const body = await get(`confinamentos/${id}`)
-    return body
+
+    if (!body.success) {
+      throw body.message
+    }
+
+    return body.response
   } catch (e) {
     console.error(e)
     return e
   }
 }
+
 const getConfinamentos = async () => {
   try {
     const body = await get(`confinamentos`)
-    return body.data
+
+    if (!body.success) {
+      throw body.message
+    }
+
+    return body.response
   } catch (e) {
     console.error(e)
     return e

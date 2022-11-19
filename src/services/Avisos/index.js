@@ -3,16 +3,27 @@ import { get } from '../index'
 const getAviso = async (id) => {
   try {
     const body = await get(`avisos/${id}`)
-    return body
+
+    if (!body.success) {
+      throw body.message
+    }
+
+    return body.response
   } catch (e) {
     console.error(e)
     return e
   }
 }
+
 const getAvisos = async () => {
   try {
     const body = await get(`avisos`)
-    return body.data
+
+    if (!body.success) {
+      throw body.message
+    }
+
+    return body.response
   } catch (e) {
     console.error(e)
     return e

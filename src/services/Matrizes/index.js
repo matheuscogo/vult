@@ -1,9 +1,14 @@
-import { get } from '../index'
+import { get, post, put, del } from '../index'
 
 const getMatriz = async (id) => {
   try {
     const body = await get(`matrizes/${id}`)
-    return body
+
+    if (!body.success) {
+      throw body.message
+    }
+
+    return body.response
   } catch (e) {
     console.error(e)
     return e
@@ -11,30 +16,62 @@ const getMatriz = async (id) => {
 }
 const getMatrizes = async () => {
   try {
-    const body = await get(`matrizes`)
-    return body.data
+    const body = await get('matrizes')
+
+    if (!body.success) {
+      throw body.message
+    }
+
+    return body.response
   } catch (e) {
     console.error(e)
     return e
   }
 }
 
-// const getMatrizes = async () => {
-//   return await instance
-//     .get('/')
-//     .then((res) => res)
-//     .catch((err) => console.error(err))
-// }
+const insertMatriz = async (matriz) => {
+  try {
+    const body = await post('matrizes/insert', matriz)
 
-// const insertMatriz = async (matriz) => {
-//   return await instance.post('/insert', matriz)
-// }
+    if (!body.success) {
+      throw body.message
+    }
 
-// const updateMatriz = async (matriz) => {
-//   return await instance.put('/update/', matriz)
-// }
-// const deleteMatriz = async (id) => {
-//   return await instance.delete(`/delete/${id}`)
-// }
+    return body.response
+  } catch (e) {
+    console.error(e)
+    return e
+  }
+}
 
-export { getMatriz, getMatrizes }
+const updateMatriz = async (id, matriz) => {
+  try {
+    const body = await put(`matrizes/update/${id}`, matriz)
+
+    if (!body.success) {
+      throw body.message
+    }
+
+    return body.response
+  } catch (e) {
+    console.error(e)
+    return e
+  }
+}
+
+const deleteMatriz = async (id) => {
+  try {
+    const body = await del(`matrizes/delete/${id}`)
+
+    if (!body.success) {
+      throw body.message
+    }
+
+    return body.response
+  } catch (e) {
+    console.error(e)
+    return e
+  }
+}
+
+export { insertMatriz, getMatriz, getMatrizes, updateMatriz, deleteMatriz }
