@@ -23,7 +23,7 @@ export default class DatagridAvisosStore extends DatagridStore {
           field: 'aviso',
           headerName: 'Aviso',
           width: 300,
-          renderCell: ({ value }) => <Typography>{value.label}</Typography>,
+          renderCell: ({ value }) => <Typography>{value}</Typography>,
         },
         dataAviso: {
           field: 'dataAviso',

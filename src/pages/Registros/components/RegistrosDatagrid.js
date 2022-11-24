@@ -49,6 +49,7 @@ export default function RegistrosDatagrid(props) {
       title={'Registro'}
       columns={columns}
       add={add}
+      showAdd={false}
       refresh={refresh}
       rows={rows}
       pageSize={20}

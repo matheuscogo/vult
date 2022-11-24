@@ -33,7 +33,11 @@ const post = async (endpoint, headers, body) => {
 
     return data
   } catch (e) {
-    console.error(e)
+    return {
+      success: false,
+      message: e,
+      response: {},
+    }
   }
 }
 

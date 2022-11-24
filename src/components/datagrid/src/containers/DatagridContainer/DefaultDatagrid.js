@@ -9,7 +9,7 @@ import { withStyles } from '@material-ui/styles'
 import styles from './styles'
 
 const DefaultDatagrid = (props) => {
-  const { rows, columns, refresh, add, title } = props
+  const { rows, columns, refresh, add, title, showAdd } = props
 
   return (
     <Box>
@@ -18,14 +18,17 @@ const DefaultDatagrid = (props) => {
         direction="rows"
         alignItems="center"
         justifyContent="center"
+        spacing={24}
       >
-        <Grid item style={{ margin: 10, marginRight: 100 }}>
-          <Fab variant="extended" onClick={() => add()}>
-            <AddCircleIcon sx={{ mr: 1 }} />
-            Cadastrar {title}
-          </Fab>
-        </Grid>
-        <Grid item style={{ margin: 10, marginLeft: 100 }}>
+        {showAdd ? (
+          <Grid item style={{ margin: 10 }}>
+            <Fab variant="extended" onClick={() => add()}>
+              <AddCircleIcon sx={{ mr: 1 }} />
+              Cadastrar {title}
+            </Fab>
+          </Grid>
+        ) : null}
+        <Grid item style={{ margin: 10 }}>
           <Fab
             variant="extended"
             style={{ padding: 25, float: 'right' }}
@@ -47,6 +50,7 @@ DefaultDatagrid.propTypes = {
 
 DefaultDatagrid.defaultProps = {
   add: {},
+  showAdd: true,
 }
 
 export default withStyles(styles)(DefaultDatagrid)

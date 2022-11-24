@@ -3,7 +3,7 @@ import { getPlanos } from '../../../services/Planos'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CancelIcon from '@mui/icons-material/Cancel'
 import Grid from '@mui/material/Grid'
-import { IconButton } from '@mui/material'
+import { IconButton, Typography } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import InfoIcon from '@mui/icons-material/Info'
@@ -32,10 +32,14 @@ export default class DatagridPlanosStore extends DatagridStore {
         tipo: {
           field: 'tipo',
           headerName: 'Tipo',
+          renderCell: ({ value }) => (
+            <Typography>{value.description}</Typography>
+          ),
         },
         quantidadeDias: {
           field: 'quantidadeDias',
           headerName: 'Quantidade Dias',
+          renderCell: ({ value }) => <Typography>{value} dias</Typography>,
         },
         ativo: {
           field: 'active',

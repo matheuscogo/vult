@@ -1,4 +1,4 @@
-import { get } from '../index'
+import { get, post } from '../index'
 
 const getConfinamento = async (id) => {
   try {
@@ -10,8 +10,11 @@ const getConfinamento = async (id) => {
 
     return body.response
   } catch (e) {
-    console.error(e)
-    return e
+    return {
+      success: false,
+      message: e,
+      response: {},
+    }
   }
 }
 
@@ -25,27 +28,37 @@ const getConfinamentos = async () => {
 
     return body.response
   } catch (e) {
-    console.error(e)
-    return e
+    return {
+      success: false,
+      message: e,
+      response: {},
+    }
   }
 }
 
-// const getMatrizes = async () => {
-//   return await instance
-//     .get('/')
-//     .then((res) => res)
-//     .catch((err) => console.error(err))
-// }
+const insertConfinamento = async (confinamento) => {
+  try {
+    const customConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+    const body = await post('confinamentos/insert', customConfig, confinamento)
 
-// const insertMatriz = async (matriz) => {
-//   return await instance.post('/insert', matriz)
-// }
+    console.warn('body', body)
 
-// const updateMatriz = async (matriz) => {
-//   return await instance.put('/update/', matriz)
-// }
-// const deleteMatriz = async (id) => {
-//   return await instance.delete(`/delete/${id}`)
-// }
+    if (!body.success) {
+      throw body.message
+    }
 
-export { getConfinamento, getConfinamentos }
+    return { response: body.response, message: body.message }
+  } catch (e) {
+    return {
+      success: false,
+      message: e,
+      response: {},
+    }
+  }
+}
+
+export { getConfinamento, getConfinamentos, insertConfinamento }
