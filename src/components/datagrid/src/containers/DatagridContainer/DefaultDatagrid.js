@@ -45,11 +45,11 @@ const DefaultDatagrid = (props) => {
 }
 
 DefaultDatagrid.propTypes = {
-  add: PropTypes.object,
+  add: PropTypes.func,
 }
 
 DefaultDatagrid.defaultProps = {
-  add: {},
+  add: () => {},
   showAdd: true,
 }
 

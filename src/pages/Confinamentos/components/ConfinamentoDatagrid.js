@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { isEmpty } from 'lodash'
 import DefaultDatagrid from '../../../components/datagrid/src/containers/DatagridContainer/DefaultDatagrid'
 import { getConfinamentos } from '../../../services/Confinamentos'
-import { FORM_CONFINAMENTO, HOME } from '../../../navigation/CONSTANTS'
+import { HOME } from '../../../navigation/CONSTANTS'
 import { useNavigate } from 'react-router-dom'
 
 export default function ConfinamentosDatagrid(props) {
@@ -45,7 +45,7 @@ export default function ConfinamentosDatagrid(props) {
   }
 
   const add = () => {
-    history(FORM_CONFINAMENTO || HOME)
+    history('form' || HOME)
   }
 
   return (

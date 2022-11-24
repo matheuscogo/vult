@@ -10,7 +10,6 @@ import Fab from '@mui/material/Fab'
 import Check from '@mui/icons-material/Check'
 import ArrowBack from '@mui/icons-material/ArrowBack'
 import { useNavigate } from 'react-router-dom'
-import { MATRIZES, HOME } from '../../../navigation/CONSTANTS'
 import { isEmpty } from 'lodash'
 
 const theme = createTheme()
@@ -40,7 +39,7 @@ export default function FormMatriz() {
   }
 
   const goBackward = () => {
-    history(MATRIZES || HOME)
+    history(-1)
   }
 
   return (

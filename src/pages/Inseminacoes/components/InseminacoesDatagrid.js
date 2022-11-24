@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { isEmpty } from 'lodash'
 import DefaultDatagrid from '../../../components/datagrid/src/containers/DatagridContainer/DefaultDatagrid'
 import { getInseminacoes } from '../../../services/Inseminacoes'
-import { FORM_INSEMINACOES, HOME } from '../../../navigation/CONSTANTS'
+import { HOME } from '../../../navigation/CONSTANTS'
 import { useNavigate } from 'react-router-dom'
 
 export default function InseminacoesDatagrid(props) {
@@ -45,7 +45,7 @@ export default function InseminacoesDatagrid(props) {
   }
 
   const add = () => {
-    history(FORM_INSEMINACOES || HOME)
+    history('form' || HOME)
   }
 
   return (

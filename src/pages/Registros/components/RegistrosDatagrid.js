@@ -21,10 +21,6 @@ export default function RegistrosDatagrid(props) {
       })
   }
 
-  const add = () => {
-    alert('adicionar')
-  }
-
   const { store } = props
 
   const {
@@ -48,7 +44,6 @@ export default function RegistrosDatagrid(props) {
     <DefaultDatagrid
       title={'Registro'}
       columns={columns}
-      add={add}
       showAdd={false}
       refresh={refresh}
       rows={rows}

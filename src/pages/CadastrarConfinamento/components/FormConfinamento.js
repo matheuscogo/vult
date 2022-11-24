@@ -20,7 +20,6 @@ import Fab from '@mui/material/Fab'
 import Check from '@mui/icons-material/Check'
 import ArrowBack from '@mui/icons-material/ArrowBack'
 import { useNavigate } from 'react-router-dom'
-import { INSEMINACOES, HOME } from '../../../navigation/CONSTANTS'
 
 const theme = createTheme()
 
@@ -80,7 +79,7 @@ export default function FormConfinamento() {
   }
 
   const goBackward = () => {
-    history(INSEMINACOES || HOME)
+    history(-1)
   }
 
   return (
