@@ -12,7 +12,6 @@ import { isNumber, map } from 'lodash'
 import Check from '@mui/icons-material/Check'
 import ArrowBack from '@mui/icons-material/ArrowBack'
 import { useNavigate } from 'react-router-dom'
-import { PLANOS, HOME } from '../../../navigation/CONSTANTS'
 
 const theme = createTheme()
 
@@ -62,7 +61,7 @@ export default function FormPlano() {
   }
 
   const goBackward = () => {
-    history(PLANOS || HOME)
+    history(-1)
   }
 
   return (

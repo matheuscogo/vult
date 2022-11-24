@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { isEmpty } from 'lodash'
 import DefaultDatagrid from '../../../components/datagrid/src/containers/DatagridContainer/DefaultDatagrid'
 import { getPlanos } from '../../../services/Planos'
-import { FORM_PLANOS, HOME } from '../../../navigation/CONSTANTS'
+import { HOME } from '../../../navigation/CONSTANTS'
 import { useNavigate } from 'react-router-dom'
 
 export default function PlanosDatagrid(props) {
@@ -26,7 +26,7 @@ export default function PlanosDatagrid(props) {
   }
 
   const add = () => {
-    history(FORM_PLANOS || HOME)
+    history('form' || HOME)
   }
   const { store } = props
 

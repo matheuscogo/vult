@@ -3,7 +3,7 @@ import DefaultDatagrid from '../../../components/datagrid/src/containers/Datagri
 import { getMatrizes } from '../../../services/Matrizes'
 import { isEmpty } from 'lodash'
 import { useNavigate } from 'react-router-dom'
-import { HOME, FORM_MATRIZES } from '../../../navigation/CONSTANTS'
+import { HOME } from '../../../navigation/CONSTANTS'
 export default function MatrizesDatagrid(props) {
   const history = useNavigate()
 
@@ -46,7 +46,7 @@ export default function MatrizesDatagrid(props) {
   }
 
   const add = () => {
-    history(FORM_MATRIZES || HOME)
+    history('form' || HOME)
   }
 
   return (
