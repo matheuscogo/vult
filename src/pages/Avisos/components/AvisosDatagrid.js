@@ -47,6 +47,7 @@ export default function AvisosDatagrid(props) {
       title="Aviso"
       refresh={refresh}
       columns={columns}
+      showAdd={false}
       rowActions={rowActions}
       rows={rows}
       pageSize={20}

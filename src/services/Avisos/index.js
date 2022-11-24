@@ -10,8 +10,11 @@ const getAviso = async (id) => {
 
     return body.response
   } catch (e) {
-    console.error(e)
-    return e
+    return {
+      success: false,
+      message: e,
+      response: {},
+    }
   }
 }
 
@@ -25,8 +28,11 @@ const getAvisos = async () => {
 
     return body.response
   } catch (e) {
-    console.error(e)
-    return e
+    return {
+      success: false,
+      message: e,
+      response: {},
+    }
   }
 }
 

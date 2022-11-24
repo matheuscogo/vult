@@ -2,25 +2,10 @@ import React, { useState } from 'react'
 import DefaultDatagrid from '../../../components/datagrid/src/containers/DatagridContainer/DefaultDatagrid'
 import { getMatrizes } from '../../../services/Matrizes'
 import { isEmpty } from 'lodash'
-
+import { useNavigate } from 'react-router-dom'
+import { HOME, FORM_MATRIZES } from '../../../navigation/CONSTANTS'
 export default function MatrizesDatagrid(props) {
-  const refresh = () => {
-    setLoading(true)
-    getMatrizes()
-      .then((result) => {
-        setRows(result)
-        setLoading(false)
-      })
-      .catch((e) => {
-        console.error(e)
-        setRows([])
-        setLoading(false)
-      })
-  }
-
-  const add = () => {
-    alert('adicionar')
-  }
+  const history = useNavigate()
 
   const [rows, setRows] = useState([])
   const [loading, setLoading] = useState(true)
@@ -44,6 +29,24 @@ export default function MatrizesDatagrid(props) {
         setRows([])
         setLoading(false)
       })
+  }
+
+  const refresh = () => {
+    setLoading(true)
+    getMatrizes()
+      .then((result) => {
+        setRows(result)
+        setLoading(false)
+      })
+      .catch((e) => {
+        console.error(e)
+        setRows([])
+        setLoading(false)
+      })
+  }
+
+  const add = () => {
+    history(FORM_MATRIZES || HOME)
   }
 
   return (

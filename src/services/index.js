@@ -3,6 +3,9 @@ import axios from 'axios'
 const instance = axios.create({
   baseURL: 'http://localhost:5000/api/v1/',
   // baseURL: 'https://matheuscogo.pythonanywhere.com/api/v1/',
+  headers: {
+    'Content-Type': 'application/json',
+  },
 })
 
 const get = async (endpoint, headers, body) => {
@@ -33,7 +36,11 @@ const post = async (endpoint, headers, body) => {
 
     return data
   } catch (e) {
-    console.error(e)
+    return {
+      success: false,
+      message: e,
+      response: {},
+    }
   }
 }
 

@@ -2,28 +2,14 @@ import React, { useState } from 'react'
 import { isEmpty } from 'lodash'
 import DefaultDatagrid from '../../../components/datagrid/src/containers/DatagridContainer/DefaultDatagrid'
 import { getInseminacoes } from '../../../services/Inseminacoes'
+import { FORM_INSEMINACOES, HOME } from '../../../navigation/CONSTANTS'
+import { useNavigate } from 'react-router-dom'
 
 export default function InseminacoesDatagrid(props) {
+  const history = useNavigate
+
   const [rows, setRows] = useState([])
   const [loading, setLoading] = useState(true)
-
-  const refresh = () => {
-    setLoading(true)
-    getInseminacoes()
-      .then((result) => {
-        setRows(result)
-        setLoading(false)
-      })
-      .catch((e) => {
-        console.error(e)
-        setRows([])
-        setLoading(false)
-      })
-  }
-
-  const add = () => {
-    alert('adicionar')
-  }
 
   const { store } = props
 
@@ -42,6 +28,24 @@ export default function InseminacoesDatagrid(props) {
         setRows([])
         setLoading(false)
       })
+  }
+
+  const refresh = () => {
+    setLoading(true)
+    getInseminacoes()
+      .then((result) => {
+        setRows(result)
+        setLoading(false)
+      })
+      .catch((e) => {
+        console.error(e)
+        setRows([])
+        setLoading(false)
+      })
+  }
+
+  const add = () => {
+    history(FORM_INSEMINACOES || HOME)
   }
 
   return (
