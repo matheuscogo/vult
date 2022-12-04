@@ -36,9 +36,20 @@ export default class DatagridInseminacoesStore extends DatagridStore {
             <Typography>{value.description}</Typography>
           ),
         },
-        dataConfinamento: {
+        dataInseminacao: {
           field: 'dataInseminacao',
-          headerName: 'Data do Inseminação',
+          headerName: 'Data da Inseminação',
+          renderCell: ({ value }) => {
+            Moment.locale('pt-br')
+            return (
+              <Typography> {Moment(value).format('DD/MM/YYYY')} </Typography>
+            )
+          },
+          width: 200,
+        },
+        confinamento: {
+          field: 'confinamento',
+          headerName: 'Data do Confinamento',
           renderCell: ({ value }) => {
             Moment.locale('pt-br')
             return (
