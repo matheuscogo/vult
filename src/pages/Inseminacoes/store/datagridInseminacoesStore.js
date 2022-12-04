@@ -36,7 +36,7 @@ export default class DatagridInseminacoesStore extends DatagridStore {
             <Typography>{value.description}</Typography>
           ),
         },
-        dataConfinamento: {
+        dataInseminacao: {
           field: 'dataInseminacao',
           headerName: 'Data da Inseminação',
           renderCell: ({ value }) => {

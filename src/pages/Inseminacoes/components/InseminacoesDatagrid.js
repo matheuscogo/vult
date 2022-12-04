@@ -50,14 +50,14 @@ export default function InseminacoesDatagrid(props) {
 
   return (
     <DefaultDatagrid
-      title={'Confinamento'}
+      title={'Inseminação'}
       columns={columns}
       add={add}
       refresh={refresh}
       rows={rows}
       pageSize={20}
       loading={loading}
-      style={{ minHeight: '100vh', minWidth: 890 }}
+      style={{ minHeight: '100vh', minWidth: 1090 }}
       rowsPerPageOptions={[0]}
       className="DataGrid"
     />
