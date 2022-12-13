@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { isEmpty } from 'lodash'
+import React, { useState, useEffect } from 'react'
 import DefaultDatagrid from '../../../components/datagrid/src/containers/DatagridContainer/DefaultDatagrid'
 import { getRegistros } from '../../../services/Registros'
 
@@ -27,17 +26,15 @@ export default function RegistrosDatagrid(props) {
     datagrid: { columns },
   } = store
 
-  if (isEmpty(rows)) {
-    getRegistros()
-      .then((result) => {
-        setRows(result)
-        setLoading(false)
-      })
-      .catch((e) => {
-        console.error(e)
-        setRows([])
-        setLoading(false)
-      })
+  useEffect(() => {
+    query()
+  }, [])
+
+  const query = async () => {
+    setLoading(true)
+    const result = await getRegistros()
+    setRows(result)
+    setLoading(false)
   }
 
   return (
@@ -49,7 +46,7 @@ export default function RegistrosDatagrid(props) {
       rows={rows}
       pageSize={20}
       loading={loading}
-      style={{ minHeight: '100vh', minWidth: 1050 }}
+      style={{ minHeight: '100vh', minWidth: 990 }}
       rowsPerPageOptions={[0]}
       className="DataGrid"
     />

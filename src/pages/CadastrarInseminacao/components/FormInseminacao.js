@@ -44,7 +44,7 @@ export default function FormInseminacao() {
       !isEmpty(String(matriz)) &&
       !isEmpty(String(plano))
     ) {
-      const { success, message } = await insertInseminacao(
+      const { message } = await insertInseminacao(
         JSON.stringify({
           matrizId: matriz,
           dataInseminacao: formattedDate,
@@ -53,37 +53,32 @@ export default function FormInseminacao() {
         })
       )
 
-      alert(success ? message : 'Erro: ' + message)
+      alert(message)
     }
   }
 
   const handlePlanoChange = (event) => {
-    console.warn(event.target.value)
     setPlano(event.target.value)
   }
 
   useEffect(() => {
     getMatrizes()
       .then((response) => {
-        console.warn('matriz', response)
         setMatrizForSelect(response)
       })
       .catch()
     getPlanos()
       .then((response) => {
-        console.warn('plano', response)
         setPlanoForSelect(response)
       })
       .catch()
   }, [])
 
   const handleChange = (event) => {
-    console.warn(event.target.value)
     setMatriz(Number(event.target.value))
   }
 
   const handleCicloChange = (event) => {
-    console.warn(event.target.checked)
     setCiclo(event.target.checked)
   }
 

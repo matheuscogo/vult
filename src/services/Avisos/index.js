@@ -1,4 +1,4 @@
-import { get } from '../index'
+import { get, put, del } from '../index'
 
 const getAviso = async (id) => {
   try {
@@ -12,7 +12,7 @@ const getAviso = async (id) => {
   } catch (e) {
     return {
       success: false,
-      message: e,
+      message: 'Erro: ' + e,
       response: {},
     }
   }
@@ -30,28 +30,52 @@ const getAvisos = async () => {
   } catch (e) {
     return {
       success: false,
-      message: e,
+      message: 'Erro: ' + e,
       response: {},
     }
   }
 }
 
-// const getMatrizes = async () => {
-//   return await instance
-//     .get('/')
-//     .then((res) => res)
-//     .catch((err) => console.error(err))
-// }
+const separateMatriz = async (separate) => {
+  try {
+    const customConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
 
-// const insertMatriz = async (matriz) => {
-//   return await instance.post('/insert', matriz)
-// }
+    const body = await put('avisos/separarMatriz', customConfig, separate)
 
-// const updateMatriz = async (matriz) => {
-//   return await instance.put('/update/', matriz)
-// }
-// const deleteMatriz = async (id) => {
-//   return await instance.delete(`/delete/${id}`)
-// }
+    if (!body.success) {
+      throw body.message
+    }
 
-export { getAviso, getAvisos }
+    return body
+  } catch (e) {
+    return {
+      success: false,
+      message: 'Erro: ' + e,
+      response: {},
+    }
+  }
+}
+
+const deleteAviso = async (id) => {
+  try {
+    const body = await del(`avisos/delete/${id}`)
+
+    if (!body.success) {
+      throw body.message
+    }
+
+    return body
+  } catch (e) {
+    return {
+      success: false,
+      message: 'Erro: ' + e,
+      response: {},
+    }
+  }
+}
+
+export { getAviso, getAvisos, separateMatriz, deleteAviso }

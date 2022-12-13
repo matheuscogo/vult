@@ -1,35 +1,42 @@
-import axios from 'axios'
-
-const instance = axios.create({
-  // baseURL: 'http://localhost:5000/api/v1/parametros',
-  baseURL: 'http://localhost:5000/api/v1/parametros',
-})
+import { get, put } from '../index'
 
 const getParametros = async () => {
-  return await instance
-    .get('/')
-    .then((response) => response)
-    .catch((error) => console.error(error))
+  try {
+    const body = await get(`parametros`)
+
+    if (!body.success) {
+      throw body.message
+    }
+
+    return body.response
+  } catch (e) {
+    console.error(e)
+    return e
+  }
 }
 
-const getParametro = async (id) => {
-  return await instance
-    .get(`/${id}`)
-    .then((response) => response)
-    .catch((error) => console.error(error))
+const updateParametros = async (parametros) => {
+  try {
+    const customConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+
+    const body = await put(`parametros/update/`, customConfig, parametros)
+
+    if (!body.success) {
+      throw body.message
+    }
+
+    return body
+  } catch (e) {
+    return {
+      success: false,
+      message: 'Erro: ' + e,
+      response: {},
+    }
+  }
 }
 
-// Registros não precisam ser inseridos/alterados/deletados
-// const insertRegistro = async (registro) => {
-//   return INSERT_REGISTRO(registro);
-// };
-
-// const updateRegistro = async (registro) => {
-//   return UPDATE_REGISTRO(registro);
-// };
-// const deleteRegistro= async (id) => {
-//   return DELETE_REGISTRO(id);
-// };
-
-export { getParametros, getParametro }
-// export { getRegistro, getRegistros, insertRegistro, updateRegistro, deleteRegistro };
+export { getParametros, updateParametros }

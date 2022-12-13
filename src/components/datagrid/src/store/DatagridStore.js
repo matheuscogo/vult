@@ -1,6 +1,6 @@
 import { makeObservable, observable, action } from 'mobx'
 import { mapValues, cloneDeep } from 'lodash'
-import { isFunction, map, isEmpty, isNumber } from 'lodash'
+import { isFunction, map, isEmpty, isNumber, isBoolean } from 'lodash'
 
 class DatagridStore {
   constructor({ endpoint, initialData }) {
@@ -49,7 +49,7 @@ class DatagridStore {
         return {
           field: value.field,
           headerName: value.headerName,
-          editable: isEmpty(value.editable) ? false : true,
+          editable: isBoolean(value.editable) ? value.editable : value.editable,
           width: isNumber(value.width) ? value.width : 150,
           renderCell: isFunction(value.renderCell) ? value.renderCell : null,
           hide: value.hide,

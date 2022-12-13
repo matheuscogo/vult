@@ -12,7 +12,8 @@ const getMatriz = async (id) => {
   } catch (e) {
     return {
       success: false,
-      message: e,
+      message: 'Erro: ' + e,
+
       response: {},
     }
   }
@@ -29,7 +30,8 @@ const getMatrizes = async () => {
   } catch (e) {
     return {
       success: false,
-      message: e,
+      message: 'Erro: ' + e,
+
       response: {},
     }
   }
@@ -42,18 +44,17 @@ const insertMatriz = async (matriz) => {
         'Content-Type': 'application/json',
       },
     }
-    console.warn('matriz', matriz)
     const body = await post('matrizes/insert', customConfig, matriz)
 
     if (!body.success) {
       throw body.message
     }
 
-    return body.response
+    return body
   } catch (e) {
     return {
       success: false,
-      message: e,
+      message: 'Erro: ' + e,
       response: {},
     }
   }
@@ -67,11 +68,11 @@ const updateMatriz = async (id, matriz) => {
       throw body.message
     }
 
-    return body.response
+    return body
   } catch (e) {
     return {
       success: false,
-      message: e,
+      message: 'Erro: ' + e,
       response: {},
     }
   }
@@ -85,11 +86,12 @@ const deleteMatriz = async (id) => {
       throw body.message
     }
 
-    return body.response
+    return body
   } catch (e) {
     return {
       success: false,
-      message: e,
+      message: 'Erro: ' + e,
+
       response: {},
     }
   }

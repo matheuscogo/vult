@@ -1,131 +1,79 @@
 import React, { useEffect, useState } from 'react'
-import { isBoolean } from 'lodash'
-import { Box, Grid, Fab } from '@mui/material'
-import { getParametros } from '../../../services/Parametros'
 import DefaultDatagrid from '../../../components/datagrid/src/containers/DatagridContainer/DefaultDatagrid'
-import IconButton from '@material-ui/core/IconButton'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import CancelIcon from '@mui/icons-material/Cancel'
-import ChangeCircleIcon from '@mui/icons-material/ChangeCircle'
-import { ADD_PARAMETRO } from '../../../navigation/CONSTANTS'
-import { Typography } from '@mui/material'
+import { getParametros, updateParametros } from '../../../services/Parametros'
 
-export default function ParametroDatagrid(props) {
+export default function ParametrosDatagrid(props) {
   const [rows, setRows] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const { refresh } = props
+  const { store } = props
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   getParametros()
-  //     .then((response) => {
-  //       setRows(get(response, 'data.data'));
-  //     })
-  //     .catch()
-  //     .finally(setLoading(false));
-  // }, [refresh]);
-
-  const width = '820'
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   getParametros()
-  //     .then((response) => {
-  //       setRows(get(response, 'data.data'));
-  //     })
-  //     .catch()
-  //     .finally(setLoading(false));
-  // }, []);
+  const {
+    datagrid: { columns },
+  } = store
 
   useEffect(() => {
-    setLoading(false)
-  }, [rows])
-
-  const columns = [
-    { field: 'id', headerName: 'ID', width: width / 5 },
-    {
-      field: 'parameter',
-      headerName: 'Parâmero',
-      width: width / 5,
-      editable: true,
-    },
-    {
-      field: 'value',
-      headerName: 'Valor',
-      width: width / 5,
-      editable: true,
-      renderCell: (params) => {
-        if (isBoolean(params.value)) {
-          return params.value ? (
-            <div>
-              <CheckCircleIcon color="green" />
-            </div>
-          ) : (
-            <div>
-              <CancelIcon color="red" />
-            </div>
-          )
-        }
-
-        return <div>{params.value}</div>
-      },
-    },
-    {
-      field: 'action',
-      headerName: 'Ações',
-      sortable: false,
-      width: width / 5 + 20,
-      renderCell: (params) => {
-        const enableClick = (e) => {
-          e.stopPropagation()
-
-          const api = params.api
-          const thisRow = {}
-
-          api
-            .getAllColumns()
-            .filter((c) => c.field !== '__check__' && !!c)
-            .forEach(
-              (c) => (thisRow[c.field] = params.getValue(params.id, c.field))
-            )
-
-          return alert(JSON.stringify(thisRow, null, 4))
-        }
-
-        return (
-          <Grid container>
-            <Grid item xs={4}>
-              <IconButton onClick={enableClick}>
-                <ChangeCircleIcon color="primary" />
-              </IconButton>
-            </Grid>
-          </Grid>
-        )
-      },
-    },
-  ]
-
-  useEffect(() => {
-    setLoading(true)
-    setRows([
-      {
-        id: 1,
-        parameter: 'teste',
-        value: '100',
-      },
-    ])
-    setLoading(false)
+    query()
   }, [])
+
+  const query = async () => {
+    setLoading(true)
+    const result = await getParametros()
+    let response = []
+    response.push(result)
+    setRows(response)
+    setLoading(false)
+  }
+
+  const refresh = async () => {
+    setLoading(true)
+    const result = await getParametros()
+    let response = []
+    response.push(result)
+    setRows(response)
+    setLoading(false)
+  }
+
+  const onCellEditCommit = async (cellData) => {
+    let result = await getParametros()
+
+    if (cellData.field === 'quantidadePorcao') {
+      result.quantidadePorcao = Number(cellData.value)
+    }
+
+    if (cellData.field === 'tempoPorcao') {
+      result.tempoPorcao = Number(cellData.value)
+    }
+
+    if (cellData.field === 'intervaloPorcoes') {
+      result.intervaloPorcoes = Number(cellData.value)
+    }
+
+    if (cellData.field === 'tempoProximaMatriz') {
+      result.tempoProximaMatriz = Number(cellData.value)
+    }
+
+    if (cellData.field === 'tempoSemBrinco') {
+      result.tempoSemBrinco = Number(cellData.value)
+    }
+
+    console.warn('result', result)
+
+    await updateParametros(result)
+    await refresh()
+  }
 
   return (
     <DefaultDatagrid
-      rows={rows}
+      title={'Parametros'}
+      showAdd={false}
+      onCellEditCommit={onCellEditCommit}
       columns={columns}
-      loading={loading}
-      add={{ title: 'Cadastrar Parametros', to: ADD_PARAMETRO }}
+      refresh={refresh}
+      rows={rows}
       pageSize={20}
-      style={{ minHeight: '100vh', minWidth: 100 }}
+      loading={loading}
+      style={{ minHeight: '100vh', minWidth: 1300 }}
       rowsPerPageOptions={[0]}
       className="DataGrid"
     />

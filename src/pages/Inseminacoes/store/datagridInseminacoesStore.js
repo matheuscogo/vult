@@ -1,13 +1,14 @@
 import DatagridStore from '../../../components/datagrid/src/store/DatagridStore'
-import { getInseminacoes } from '../../../services/Inseminacoes'
+import {
+  getInseminacoes,
+  deleteInseminacao,
+} from '../../../services/Inseminacoes'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CancelIcon from '@mui/icons-material/Cancel'
 import Grid from '@mui/material/Grid'
 import { IconButton, Typography } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
-import InfoIcon from '@mui/icons-material/Info'
-import { isBoolean } from 'lodash'
+import { isBoolean, get } from 'lodash'
 import Moment from 'moment'
 
 export default class DatagridInseminacoesStore extends DatagridStore {
@@ -47,6 +48,19 @@ export default class DatagridInseminacoesStore extends DatagridStore {
           },
           width: 200,
         },
+        dataConfinamento: {
+          field: 'confinamento',
+          headerName: 'Data do Confinamento',
+          renderCell: ({ value }) => {
+            Moment.locale('pt-br')
+            return (
+              <Typography>
+                {Moment(value.description).format('DD/MM/YYYY')}
+              </Typography>
+            )
+          },
+          width: 200,
+        },
         ativo: {
           field: 'active',
           headerName: 'Ativo',
@@ -70,7 +84,7 @@ export default class DatagridInseminacoesStore extends DatagridStore {
           field: 'actions',
           headerName: 'Ações',
           renderCell: (params) => {
-            const infoClick = (e) => {
+            const deleteClick = async (e) => {
               e.stopPropagation()
               const api = params.api
               const thisRow = {}
@@ -81,46 +95,16 @@ export default class DatagridInseminacoesStore extends DatagridStore {
                   (c) =>
                     (thisRow[c.field] = params.getValue(params.id, c.field))
                 )
-              return alert(JSON.stringify(thisRow, null, 4))
-            }
-            const editClick = (e) => {
-              e.stopPropagation()
-              const api = params.api
-              const thisRow = {}
-              api
-                .getAllColumns()
-                .filter((c) => c.field !== '__check__' && !!c)
-                .forEach(
-                  (c) =>
-                    (thisRow[c.field] = params.getValue(params.id, c.field))
+
+              if (window.confirm('Deletar inseminacão?')) {
+                const { message } = await deleteInseminacao(
+                  get(params, 'row.id', 0)
                 )
-              return alert(JSON.stringify(thisRow, null, 4))
-            }
-            const deleteClick = (e) => {
-              e.stopPropagation()
-              const api = params.api
-              const thisRow = {}
-              api
-                .getAllColumns()
-                .filter((c) => c.field !== '__check__' && !!c)
-                .forEach(
-                  (c) =>
-                    (thisRow[c.field] = params.getValue(params.id, c.field))
-                )
-              return alert(JSON.stringify(thisRow, null, 4))
+                alert(message)
+              }
             }
             return (
               <Grid container>
-                <Grid item xs={4}>
-                  <IconButton onClick={infoClick}>
-                    <InfoIcon color="primary" />
-                  </IconButton>
-                </Grid>
-                <Grid item xs={4}>
-                  <IconButton onClick={editClick}>
-                    <EditIcon />
-                  </IconButton>
-                </Grid>
                 <Grid item xs={4}>
                   <IconButton onClick={deleteClick}>
                     <DeleteIcon color="error" />

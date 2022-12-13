@@ -1,4 +1,4 @@
-import { get, post } from '../index'
+import { get, post, del } from '../index'
 
 const getInseminacao = async (id) => {
   try {
@@ -12,7 +12,7 @@ const getInseminacao = async (id) => {
   } catch (e) {
     return {
       success: false,
-      message: e,
+      message: 'Erro: ' + e,
       response: {},
     }
   }
@@ -30,7 +30,7 @@ const getInseminacoes = async () => {
   } catch (e) {
     return {
       success: false,
-      message: e,
+      message: 'Erro: ' + e,
       response: {},
     }
   }
@@ -43,36 +43,38 @@ const insertInseminacao = async (inseminacao) => {
         'Content-Type': 'application/json',
       },
     }
-    console.warn('inseminacoes', inseminacao)
     const body = await post('inseminacoes/insert', customConfig, inseminacao)
 
     if (!body.success) {
       throw body.message
     }
 
-    return body.response
+    return body
   } catch (e) {
     console.error(e)
     return {
       success: false,
-      message: e,
+      message: 'Erro: ' + e,
+      response: {},
+    }
+  }
+}
+const deleteInseminacao = async (id) => {
+  try {
+    const body = await del(`inseminacoes/delete/${id}`)
+
+    if (!body.success) {
+      throw body.message
+    }
+
+    return body
+  } catch (e) {
+    return {
+      success: false,
+      message: 'Erro: ' + e,
       response: {},
     }
   }
 }
 
-// const getMatrizes = async () => {
-//   return await instance
-//     .get('/')
-//     .then((res) => res)
-//     .catch((err) => console.error(err))
-// }
-
-// const updateMatriz = async (matriz) => {
-//   return await instance.put('/update/', matriz)
-// }
-// const deleteMatriz = async (id) => {
-//   return await instance.delete(`/delete/${id}`)
-// }
-
-export { getInseminacao, getInseminacoes, insertInseminacao }
+export { getInseminacao, getInseminacoes, insertInseminacao, deleteInseminacao }

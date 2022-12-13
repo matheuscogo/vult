@@ -1,8 +1,6 @@
 import DatagridStore from '../../../components/datagrid/src/store/DatagridStore'
 import { getRegistros } from '../../../services/Registros'
-import Grid from '@mui/material/Grid'
-import { IconButton, Typography } from '@mui/material'
-import InfoIcon from '@mui/icons-material/Info'
+import { Typography } from '@mui/material'
 import Moment from 'moment'
 
 export default class FormRegistrosStore extends DatagridStore {
@@ -67,34 +65,6 @@ export default class FormRegistrosStore extends DatagridStore {
           field: 'quantidade',
           headerName: 'Quantidade',
           renderCell: ({ value }) => <Typography>{value} gramas</Typography>,
-        },
-        actions: {
-          field: 'actions',
-          headerName: 'Ações',
-          renderCell: (params) => {
-            const infoClick = (e) => {
-              e.stopPropagation()
-              const api = params.api
-              const thisRow = {}
-              api
-                .getAllColumns()
-                .filter((c) => c.field !== '__check__' && !!c)
-                .forEach(
-                  (c) =>
-                    (thisRow[c.field] = params.getValue(params.id, c.field))
-                )
-              return alert(JSON.stringify(thisRow, null, 4))
-            }
-            return (
-              <Grid container>
-                <Grid item xs={4}>
-                  <IconButton onClick={infoClick}>
-                    <InfoIcon color="primary" />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            )
-          },
         },
       },
     })

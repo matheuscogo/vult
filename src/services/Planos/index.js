@@ -1,4 +1,4 @@
-import { get } from '../index'
+import { get, del } from '../index'
 
 const getPlano = async (id) => {
   try {
@@ -30,22 +30,22 @@ const getPlanos = async () => {
   }
 }
 
-// const getMatrizes = async () => {
-//   return await instance
-//     .get('/')
-//     .then((res) => res)
-//     .catch((err) => console.error(err))
-// }
+const deletePlano = async (id) => {
+  try {
+    const body = await del(`planos/delete/${id}`)
 
-// const insertMatriz = async (matriz) => {
-//   return await instance.post('/insert', matriz)
-// }
+    if (!body.success) {
+      throw body.message
+    }
 
-// const updateMatriz = async (matriz) => {
-//   return await instance.put('/update/', matriz)
-// }
-// const deleteMatriz = async (id) => {
-//   return await instance.delete(`/delete/${id}`)
-// }
+    return body
+  } catch (e) {
+    return {
+      success: false,
+      message: 'Erro: ' + e,
+      response: {},
+    }
+  }
+}
 
-export { getPlano, getPlanos }
+export { getPlano, getPlanos, deletePlano }

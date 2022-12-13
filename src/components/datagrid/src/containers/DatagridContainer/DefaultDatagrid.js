@@ -50,6 +50,7 @@ DefaultDatagrid.propTypes = {
 
 DefaultDatagrid.defaultProps = {
   add: () => {},
+  onCellEditCommit: () => {},
   showAdd: true,
 }
 

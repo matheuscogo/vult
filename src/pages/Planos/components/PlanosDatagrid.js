@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
-import { isEmpty } from 'lodash'
+import React, { useState, useEffect } from 'react'
 import DefaultDatagrid from '../../../components/datagrid/src/containers/DatagridContainer/DefaultDatagrid'
 import { getPlanos } from '../../../services/Planos'
 import { HOME } from '../../../navigation/CONSTANTS'
 import { useNavigate } from 'react-router-dom'
 
 export default function PlanosDatagrid(props) {
-  const history = useNavigate
+  const history = useNavigate()
 
   const [rows, setRows] = useState([])
   const [loading, setLoading] = useState(true)
@@ -28,23 +27,22 @@ export default function PlanosDatagrid(props) {
   const add = () => {
     history('form' || HOME)
   }
+
   const { store } = props
 
   const {
     datagrid: { columns },
   } = store
 
-  if (isEmpty(rows)) {
-    getPlanos()
-      .then((result) => {
-        setRows(result)
-        setLoading(false)
-      })
-      .catch((e) => {
-        console.error(e)
-        setRows([])
-        setLoading(false)
-      })
+  useEffect(() => {
+    query()
+  }, [])
+
+  const query = async () => {
+    setLoading(true)
+    const result = await getPlanos()
+    setRows(result)
+    setLoading(false)
   }
 
   return (

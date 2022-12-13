@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { isEmpty } from 'lodash'
+import React, { useState, useEffect } from 'react'
 import DefaultDatagrid from '../../../components/datagrid/src/containers/DatagridContainer/DefaultDatagrid'
 import { getConfinamentos } from '../../../services/Confinamentos'
 import { HOME } from '../../../navigation/CONSTANTS'
@@ -17,17 +16,15 @@ export default function ConfinamentosDatagrid(props) {
     datagrid: { columns },
   } = store
 
-  if (isEmpty(rows)) {
-    getConfinamentos()
-      .then((result) => {
-        setRows(result)
-        setLoading(false)
-      })
-      .catch((e) => {
-        console.error(e)
-        setRows([])
-        setLoading(false)
-      })
+  useEffect(() => {
+    query()
+  }, [])
+
+  const query = async () => {
+    setLoading(true)
+    const result = await getConfinamentos()
+    setRows(result)
+    setLoading(false)
   }
 
   const refresh = () => {

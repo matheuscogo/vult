@@ -1,4 +1,4 @@
-import { get, post } from '../index'
+import { get, post, del } from '../index'
 
 const getConfinamento = async (id) => {
   try {
@@ -12,7 +12,7 @@ const getConfinamento = async (id) => {
   } catch (e) {
     return {
       success: false,
-      message: e,
+      message: 'Erro: ' + e,
       response: {},
     }
   }
@@ -30,7 +30,7 @@ const getConfinamentos = async () => {
   } catch (e) {
     return {
       success: false,
-      message: e,
+      message: 'Erro: ' + e,
       response: {},
     }
   }
@@ -45,8 +45,6 @@ const insertConfinamento = async (confinamento) => {
     }
     const body = await post('confinamentos/insert', customConfig, confinamento)
 
-    console.warn('body', body)
-
     if (!body.success) {
       throw body.message
     }
@@ -55,10 +53,33 @@ const insertConfinamento = async (confinamento) => {
   } catch (e) {
     return {
       success: false,
-      message: e,
+      message: 'Erro: ' + e,
       response: {},
     }
   }
 }
 
-export { getConfinamento, getConfinamentos, insertConfinamento }
+const deleteConfinamento = async (id) => {
+  try {
+    const body = await del(`confinamentos/delete/${id}`)
+
+    if (!body.success) {
+      throw body.message
+    }
+
+    return body
+  } catch (e) {
+    return {
+      success: false,
+      message: 'Erro: ' + e,
+      response: {},
+    }
+  }
+}
+
+export {
+  getConfinamento,
+  getConfinamentos,
+  insertConfinamento,
+  deleteConfinamento,
+}

@@ -1,14 +1,16 @@
 import DatagridStore from '../../../components/datagrid/src/store/DatagridStore'
-import { getConfinamentos } from '../../../services/Confinamentos'
+import {
+  getConfinamentos,
+  deleteConfinamento,
+} from '../../../services/Confinamentos'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CancelIcon from '@mui/icons-material/Cancel'
 import Grid from '@mui/material/Grid'
 import { IconButton, Typography } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
-import InfoIcon from '@mui/icons-material/Info'
 import { isBoolean } from 'lodash'
 import Moment from 'moment'
+import { get } from 'lodash'
 
 export default class DatagridConfinamentosStore extends DatagridStore {
   constructor() {
@@ -70,32 +72,6 @@ export default class DatagridConfinamentosStore extends DatagridStore {
           field: 'actions',
           headerName: 'Ações',
           renderCell: (params) => {
-            const infoClick = (e) => {
-              e.stopPropagation()
-              const api = params.api
-              const thisRow = {}
-              api
-                .getAllColumns()
-                .filter((c) => c.field !== '__check__' && !!c)
-                .forEach(
-                  (c) =>
-                    (thisRow[c.field] = params.getValue(params.id, c.field))
-                )
-              return alert(JSON.stringify(thisRow, null, 4))
-            }
-            const editClick = (e) => {
-              e.stopPropagation()
-              const api = params.api
-              const thisRow = {}
-              api
-                .getAllColumns()
-                .filter((c) => c.field !== '__check__' && !!c)
-                .forEach(
-                  (c) =>
-                    (thisRow[c.field] = params.getValue(params.id, c.field))
-                )
-              return alert(JSON.stringify(thisRow, null, 4))
-            }
             const deleteClick = (e) => {
               e.stopPropagation()
               const api = params.api
@@ -107,20 +83,14 @@ export default class DatagridConfinamentosStore extends DatagridStore {
                   (c) =>
                     (thisRow[c.field] = params.getValue(params.id, c.field))
                 )
-              return alert(JSON.stringify(thisRow, null, 4))
+
+              if (window.confirm('Deseja excluir esse confinamento?')) {
+                const { message } = deleteConfinamento(get(params, 'row.id', 0))
+                alert(message)
+              }
             }
             return (
               <Grid container>
-                <Grid item xs={4}>
-                  <IconButton onClick={infoClick}>
-                    <InfoIcon color="primary" />
-                  </IconButton>
-                </Grid>
-                <Grid item xs={4}>
-                  <IconButton onClick={editClick}>
-                    <EditIcon />
-                  </IconButton>
-                </Grid>
                 <Grid item xs={4}>
                   <IconButton onClick={deleteClick}>
                     <DeleteIcon color="error" />

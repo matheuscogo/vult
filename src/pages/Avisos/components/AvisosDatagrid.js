@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import DefaultDatagrid from '../../../components/datagrid/src/containers/DatagridContainer/DefaultDatagrid'
 import { getAvisos } from '../../../services/Avisos'
-import { isEmpty } from 'lodash'
 
 export default function AvisosDatagrid(props) {
   const refresh = () => {
@@ -29,17 +28,15 @@ export default function AvisosDatagrid(props) {
     datagrid: { columns },
   } = store
 
-  if (isEmpty(rows)) {
-    getAvisos()
-      .then((result) => {
-        setRows(result)
-        setLoading(false)
-      })
-      .catch((e) => {
-        console.error(e)
-        setRows([])
-        setLoading(false)
-      })
+  useEffect(() => {
+    query()
+  }, [])
+
+  const query = async () => {
+    setLoading(true)
+    const result = await getAvisos()
+    setRows(result)
+    setLoading(false)
   }
 
   return (

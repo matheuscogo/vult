@@ -1,5 +1,9 @@
 import DatagridStore from '../../../components/datagrid/src/store/DatagridStore'
-import { getAvisos } from '../../../services/Avisos'
+import {
+  deleteAviso,
+  getAvisos,
+  separateMatriz,
+} from '../../../services/Avisos'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CancelIcon from '@mui/icons-material/Cancel'
 import Grid from '@mui/material/Grid'
@@ -82,7 +86,7 @@ export default class DatagridAvisosStore extends DatagridStore {
           field: 'actions',
           headerName: 'Ações',
           renderCell: (params) => {
-            const infoClick = (e) => {
+            const separateClick = (e) => {
               e.stopPropagation()
               const api = params.api
               const thisRow = {}
@@ -93,7 +97,11 @@ export default class DatagridAvisosStore extends DatagridStore {
                   (c) =>
                     (thisRow[c.field] = params.getValue(params.id, c.field))
                 )
-              return alert(JSON.stringify(thisRow, null, 4))
+
+              if (window.confirm('Deseja separar matriz?')) {
+                separateMatriz({ id: get(params, 'row.id', 0), separate: true })
+                this.refreshData()
+              }
             }
 
             const deleteClick = (e) => {
@@ -107,16 +115,26 @@ export default class DatagridAvisosStore extends DatagridStore {
                   (c) =>
                     (thisRow[c.field] = params.getValue(params.id, c.field))
                 )
-              return alert(JSON.stringify(thisRow, null, 4))
+
+              if (window.confirm('Deseja excluir esse aviso?')) {
+                const { message } = deleteAviso(get(params, 'row.id', 0))
+                alert(message)
+              }
             }
 
-            const disabled = get(params, 'row.aviso.value', 0) !== 2
+            const disabled = get(params, 'row.type', 0) !== 2
+            const canSeparate = get(params, 'row.separate', false)
 
             return (
               <Grid container>
                 <Grid item xs={6}>
-                  <IconButton onClick={infoClick} disabled={disabled}>
-                    <SplitIcon color={disabled ? 'grey' : 'primary'} />
+                  <IconButton
+                    onClick={separateClick}
+                    disabled={disabled || canSeparate}
+                  >
+                    <SplitIcon
+                      color={disabled || canSeparate ? 'grey' : 'primary'}
+                    />
                   </IconButton>
                 </Grid>
                 <Grid item xs={6}>
