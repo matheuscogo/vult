@@ -85,8 +85,10 @@ export default class DatagridConfinamentosStore extends DatagridStore {
                 )
 
               if (window.confirm('Deseja excluir esse confinamento?')) {
-                const { message } = deleteConfinamento(get(params, 'row.id', 0))
-                alert(message)
+                deleteConfinamento(get(params, 'row.id', 0))
+                  .then(({ message }) => {
+                    alert(message)
+                  })
               }
             }
             return (
