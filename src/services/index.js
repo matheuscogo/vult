@@ -9,15 +9,16 @@ const get = async (endpoint, headers, body) => {
   try {
     const { data } = await instance.get(endpoint)
 
-    const { success, message } = data
+    const { success } = data
 
     if (!success) {
-      throw message
+      throw data
     }
 
     return data
   } catch (e) {
     console.error(e)
+    return e
   }
 }
 
@@ -25,19 +26,16 @@ const post = async (endpoint, headers, body) => {
   try {
     const { data } = await instance.post(endpoint, body, headers)
 
-    const { success, message } = data
+    const { success } = data
 
     if (!success) {
-      throw message
+      throw data
     }
 
     return data
   } catch (e) {
-    return {
-      success: false,
-      message: e,
-      response: {},
-    }
+    console.error(e.message)
+    return e
   }
 }
 
@@ -45,10 +43,10 @@ const put = async (endpoint, headers, body) => {
   try {
     const { data } = await instance.put(endpoint, body, headers)
 
-    const { success, message } = data
+    const { success } = data
 
     if (!success) {
-      throw message
+      throw data
     }
 
     return data
@@ -62,10 +60,10 @@ const del = async (endpoint, headers, body) => {
   try {
     const { data } = await instance.delete(endpoint)
 
-    const { success, message } = data
+    const { success } = data
 
     if (!success) {
-      throw message
+      throw data
     }
 
     return data

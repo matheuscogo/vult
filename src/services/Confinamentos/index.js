@@ -62,7 +62,8 @@ const insertConfinamento = async (confinamento) => {
 const deleteConfinamento = async (id) => {
   try {
     const body = await del(`confinamentos/delete/${id}`)
-
+    console.warn(body)
+    console.warn('body.message', body.message)
     if (!body.success) {
       throw body.message
     }

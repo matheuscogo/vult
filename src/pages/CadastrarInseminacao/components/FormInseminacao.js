@@ -22,6 +22,7 @@ import Fab from '@mui/material/Fab'
 import Check from '@mui/icons-material/Check'
 import ArrowBack from '@mui/icons-material/ArrowBack'
 import { useNavigate } from 'react-router-dom'
+import Moment from 'moment'
 
 const theme = createTheme()
 
@@ -37,7 +38,8 @@ export default function FormInseminacao() {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const formattedDate = new Date(date)
+    Moment.locale('pt-br')
+    const formattedDate = Moment(date).format('YYYY-MM-DD')
 
     if (
       !isEmpty(String(date)) &&

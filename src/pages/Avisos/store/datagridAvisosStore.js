@@ -117,12 +117,14 @@ export default class DatagridAvisosStore extends DatagridStore {
                 )
 
               if (window.confirm('Deseja excluir esse aviso?')) {
-                const { message } = deleteAviso(get(params, 'row.id', 0))
-                alert(message)
+                deleteAviso(get(params, 'row.id', 0))
+                  .then(({ message }) => {
+                    alert(message)
+                  })
               }
             }
 
-            const disabled = get(params, 'row.type', 0) !== 2
+            const disabled = get(params, 'row.tipo', 0) !== 2
             const canSeparate = get(params, 'row.separate', false)
 
             return (

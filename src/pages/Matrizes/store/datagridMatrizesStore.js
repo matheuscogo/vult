@@ -51,8 +51,10 @@ export default class DatagridMatrizesStore extends DatagridStore {
                   'Deletar matriz nº ' + get(params, 'row.numero', '')
                 )
               ) {
-                const { message } = deleteMatriz(get(params, 'row.id', 0))
-                alert(message)
+                deleteMatriz(get(params, 'row.id', 0))
+                  .then(({message}) => {
+                    alert(message)
+                  })
               }
             }
 

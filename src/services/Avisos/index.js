@@ -65,16 +65,12 @@ const deleteAviso = async (id) => {
     const body = await del(`avisos/delete/${id}`)
 
     if (!body.success) {
-      throw body.message
+      throw body
     }
 
     return body
   } catch (e) {
-    return {
-      success: false,
-      message: 'Erro: ' + e,
-      response: {},
-    }
+    return e
   }
 }
 
